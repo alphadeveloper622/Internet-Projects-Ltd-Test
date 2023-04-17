@@ -8,7 +8,7 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mailer\Mailer; 
 use Symfony\Component\Mailer\Transport;
 use Symfony\Component\Mime\Email;
-use \PDO;
+
 
 
 class FetchFruitsCommand extends Command
