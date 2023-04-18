@@ -33,27 +33,33 @@ class FetchFruitsCommand extends Command
         $pdo->exec("CREATE TABLE IF NOT EXISTS fruits (
             id INT PRIMARY KEY AUTO_INCREMENT,
             name VARCHAR(255),
-            family VARCHAR(255),
             image VARCHAR(255),
+            family VARCHAR(255),
+            order1 VARCHAR(255),
+            genus VARCHAR(255),
             calories INT,
             carbohydrates INT,
             protein INT,
             fat INT,
-            sugar INT
+            sugar INT,
+            favorite INT
         )");
 
         // Insert fruits into database
-        $stmt = $pdo->prepare("INSERT INTO fruits (name, family,calories, carbohydrates, protein, fat,sugar) VALUES (?, ?, ?, ?, ?,?,?)");
+        $stmt = $pdo->prepare("INSERT INTO fruits (name, family, order1, genus,calories, carbohydrates, protein, fat,sugar,favorite) VALUES (?, ?, ?, ?, ?, ?, ?,?,?,?)");
 
         foreach ($fruits as $fruit) {
             $stmt->execute([
                 $fruit['name'],
                 $fruit['family'],
+                $fruit['order'],
+                $fruit['genus'],
                 $fruit['nutritions']['calories'],
                 $fruit['nutritions']['carbohydrates'],
                 $fruit['nutritions']['protein'],
                 $fruit['nutritions']['fat'],
-                $fruit['nutritions']['sugar']
+                $fruit['nutritions']['sugar'],
+                0
             ]);
         }
 

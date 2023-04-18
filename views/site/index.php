@@ -1,53 +1,54 @@
 <?php
 
 /** @var yii\web\View $this */
+use app\widgets\Alert;
 
-$this->title = 'My Yii Application';
+$this->title = 'Fruits';
 ?>
 <div class="site-index">
-
-    <div class="jumbotron text-center bg-transparent">
-        <h1 class="display-4">Congratulations!</h1>
-
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
-    </div>
-
-    <div class="body-content">
-
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-outline-secondary" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-outline-secondary" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-outline-secondary" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
-            </div>
-        </div>
-
-    </div>
+    <table id="fruits" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Office</th>
+                <th>Age</th>
+                <th>Favorite</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach($model as $field){ ?>
+            <tr>
+                <td data-search="<?= $field->name; ?>" data-order="<?= $field->name; ?>" ><?= $field->name; ?></td>
+                <td data-search="<?= $field->family; ?>"><?= $field->family; ?></td>
+                <td><?= $field->order1; ?></td>
+                <td><?= $field->genus; ?></td>
+                <td data-id="<?= $field->id; ?>" data-value="<?= $field->favorite !=0? 'active':'' ?>">
+                    <svg height="800px" width="800px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+                        viewBox="0 0 501.28 501.28" xml:space="preserve" style="width:25px;height:25px;" class="favorite <?php if($field->favorite !=0) echo "active"?>" onclick="setFavorite(event,<?= $field->favorite ==0 ? true : false;?>)">
+                    <g>
+                        <polygon style="fill:#9BC9FF;" points="501.28,194.37 335.26,159.33 250.64,12.27 250.64,419.77 405.54,489.01 387.56,320.29 	"/>
+                        <polygon style="fill:#BDDBFF;" points="166.02,159.33 0,194.37 113.72,320.29 95.74,489.01 250.64,419.77 250.64,12.27 	"/>
+                    </g>
+                    </svg>
+                </td>
+            </tr>
+            <?php }?>
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Office</th>
+                <th>Age</th>
+                <th>Favorite</th>
+            </tr>
+        </tfoot>
+    </table>
 </div>
+<?php
+    $message = 'This is an error message';
+    Yii::$app->session->setFlash('error', $message);
+    $renderingResult = Alert::widget(); 
+?>
+<div id="snackbar">The number of Favorites is over than ten!</div>

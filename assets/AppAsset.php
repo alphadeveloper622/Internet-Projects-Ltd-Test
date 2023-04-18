@@ -24,7 +24,9 @@ class AppAsset extends AssetBundle
         'css/datatables.min.css'
     ];
     public $js = [
-        'js/datatables.min.js'
+        'js/jquery.min.js',
+        'js/datatables.min.js',
+        'js/main.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

@@ -7,8 +7,7 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
-use app\models\LoginForm;
-use app\models\ContactForm;
+use app\models\Fruit;  
 
 class SiteController extends Controller
 {
@@ -61,68 +60,60 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $fruits = Fruit::find()->all();     
+        return $this->render('index' ,['model' => $fruits]);
     }
 
     /**
-     * Login action.
-     *
-     * @return Response|string
-     */
-    public function actionLogin()
-    {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        }
-
-        $model->password = '';
-        return $this->render('login', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Logout action.
-     *
-     * @return Response
-     */
-    public function actionLogout()
-    {
-        Yii::$app->user->logout();
-
-        return $this->goHome();
-    }
-
-    /**
-     * Displays contact page.
-     *
-     * @return Response|string
-     */
-    public function actionContact()
-    {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
-
-            return $this->refresh();
-        }
-        return $this->render('contact', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Displays about page.
+     * set Favorite.
      *
      * @return string
      */
-    public function actionAbout()
+    public function actionSetFavorite()
     {
-        return $this->render('about');
+        if (Yii::$app->request->isAjax) {
+            $data = Yii::$app->request->post();
+            $id= $data['id'];
+            $flag= $data['flag'];
+
+            $fruits = Fruit::find()->where(['favorite' => 1])->all();
+            $cnt= count ( $fruits );
+            // your logic;
+            $msg='';
+            $fruit = Fruit::findOne($id);
+            if($flag == 'true')
+            {   if($cnt < 10)
+                    $fruit->favorite = 1;
+                else    
+                    $msg='The number of Favorites is over than ten!';
+            }
+            else
+                $fruit->favorite = 0;
+            $fruit->save();
+
+            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+            return [
+                'message' => 'success',
+                'id'=>$id,
+                'flag'=>$flag,
+                'msg'=>$msg
+            ];
+        }
+    }
+   
+
+   
+
+    /**
+     * Displays Favorite page.
+     *
+     * @return string
+     */
+    public function actionFavorite()
+    {
+        $fruits = Fruit::find()->where(['favorite' => 1])->all();
+        
+        return $this->render('favorite', ['model' => $fruits]);
     }
 }

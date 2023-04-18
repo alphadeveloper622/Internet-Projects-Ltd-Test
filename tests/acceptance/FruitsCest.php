@@ -2,17 +2,17 @@
 
 use yii\helpers\Url;
 
-class HomeCest
+class FruitsCest
 {
-    public function ensureThatHomePageWorks(AcceptanceTester $I)
+    public function ensureThatFruitsPageWorks(AcceptanceTester $I)
     {
         $I->amOnPage(Url::toRoute('/site/index'));        
         $I->see('My Company');
         
-        $I->seeLink('About');
-        $I->click('About');
+        $I->seeLink('Favorites');
+        $I->click('Favorites');
         $I->wait(2); // wait for page to be opened
         
-        $I->see('This is the About page.');
+        $I->see('Calories');
     }
 }
