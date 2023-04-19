@@ -32,6 +32,10 @@ You should make databases named as fruit and yii2basic_test on mysql.<br>
 And should set mysql user as root and has no password.<br>
 Here "Current" means the root path of project.<br>
 You should set <Current>/web to document root of http.conf of Aphach or run follow command.
+
+~~~
+composer install
+~~~
 ~~~
 php -S localhost:8080 -t web
 ~~~
