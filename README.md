@@ -56,8 +56,9 @@ I used sendmail as SMTP server to send email.
 
 Second Test : "Create the pages with all fruits and favorite fruits"
 ------------
- I wrote controlls/SiteController.php and views/index.php and favorite.php and models/Fruit.php
-
+ I wrote controlls/SiteController.php and views/index.php and favorite.php and models/Fruit.php<br>
+ I used Datatable library for table.<br>
+ You can click favorite icon to set favorite on the project.
 
 Three Test : "Unit tests are welcome"
 -------
